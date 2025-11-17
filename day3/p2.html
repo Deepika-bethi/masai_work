@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Weekly Schedule - Grid Layout</title>
+  <style>
+    body {
+      background: #fff;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 24px;
+    }
+    .schedule-container {
+      max-width: 1160px;
+      margin: 40px auto;
+    }
+    .schedule-title {
+      text-align: center;
+      font-family: 'Comic Sans MS', cursive, Arial, sans-serif;
+      font-size: 2.6em;
+      color: #20213c;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+      margin-top: 0;
+    }
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: 120px repeat(5, 1fr);
+      grid-auto-rows: 52px;
+      gap: 14px 16px;
+      background: none;
+    }
+    .cell, .time-cell, .day-header {
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2em;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-weight: 500;
+    }
+    .time-cell {
+      background: #bef1fa;
+      color: #1e2746;
+      font-weight: bold;
+    }
+    .day-header {
+      background: #ffe9f5;
+      color: #1e2746;
+      font-weight: bold;
+      font-size: 1.17em;
+      font-family: 'Comic Sans MS', cursive, Arial, sans-serif;
+      letter-spacing: .4px;
+    }
+    .day-header:nth-child(3), .cell.tue { background: #fffdb5; }
+    .day-header:nth-child(5), .cell.thu { background: #fffdb5; }
+    .day-header:not(:nth-child(3)):not(:nth-child(5)), .cell.mon, .cell.wed, .cell.fri {
+      background: #ffe9f5;
+    }
+    .cell {
+      background: #fffdb5;
+      color: #2c3142;
+      font-size: 1.07em;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    .note-row {
+      grid-column: 1 / span 6;
+      background: #bef1fa;
+      border-radius: 25px;
+      padding-left: 16px;
+      font-weight: bold;
+      color: #223246;
+    }
+    /* Custom per-day bg for clarity */
+    .cell.mon { background: #ffe9f5; }
+    .cell.tue { background: #fffdb5; }
+    .cell.wed { background: #ffe9f5; }
+    .cell.thu { background: #fffdb5; }
+    .cell.fri { background: #ffe9f5; }
+  </style>
+</head>
+<body>
+  <div class="schedule-container">
+    <div class="schedule-title">Weekly Schedule</div>
+    <div class="schedule-grid">
+      <div></div>
+      <div class="day-header mon">Monday</div>
+      <div class="day-header tue">Tuesday</div>
+      <div class="day-header wed">Wednesday</div>
+      <div class="day-header thu">Thursday</div>
+      <div class="day-header fri">Friday</div>
+      <!-- Time and classes -->
+      <div class="time-cell">08:00</div>
+      <div class="cell mon">Maths</div>
+      <div class="cell tue">English</div>
+      <div class="cell wed">Maths</div>
+      <div class="cell thu">English</div>
+      <div class="cell fri">PT</div>
+      <div class="time-cell">09:00</div>
+      <div class="cell mon">English</div>
+      <div class="cell tue">Science</div>
+      <div class="cell wed">PT</div>
+      <div class="cell thu">Science</div>
+      <div class="cell fri">Maths</div>
+      <div class="time-cell">10:00</div>
+      <div class="cell mon">Drawing</div>
+      <div class="cell tue">Maths</div>
+      <div class="cell wed">Drawing</div>
+      <div class="cell thu">PT</div>
+      <div class="cell fri">Science</div>
+      <div class="time-cell">11:00</div>
+      <div class="cell mon">Science</div>
+      <div class="cell tue">Drawing</div>
+      <div class="cell wed">Science</div>
+      <div class="cell thu">Maths</div>
+      <div class="cell fri">English</div>
+      <div class="time-cell">12:00</div>
+      <div class="cell mon">PT</div>
+      <div class="cell tue">English</div>
+      <div class="cell wed">Maths</div>
+      <div class="cell thu">Drawing</div>
+      <div class="cell fri">Drawing</div>
+      <div class="time-cell">13:00</div>
+      <div class="cell mon">English</div>
+      <div class="cell tue">Maths</div>
+      <div class="cell wed">Science</div>
+      <div class="cell thu">PT</div>
+      <div class="cell fri">Maths</div>
+      <div class="time-cell">14:00</div>
+      <div class="cell mon">Science</div>
+      <div class="cell tue">PT</div>
+      <div class="cell wed">Drawing</div>
+      <div class="cell thu">Maths</div>
+      <div class="cell fri">PT</div>
+      <div class="time-cell">15:00</div>
+      <div class="cell mon">Drawing</div>
+      <div class="cell tue">Science</div>
+      <div class="cell wed">English</div>
+      <div class="cell thu">Drawing</div>
+      <div class="cell fri">Science</div>
+      <div class="time-cell">16:00</div>
+      <div class="cell mon"></div>
+      <div class="cell tue"></div>
+      <div class="cell wed"></div>
+      <div class="cell thu"></div>
+      <div class="cell fri"></div>
+      <!-- Notes row -->
+      <div class="note-row">Note: Fill with your custom instructions here.</div>
+    </div>
+  </div>
+</body>
+</html>
