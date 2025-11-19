@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nine Coffee Types with Costs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f6e7d6;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      text-align: center;
+      margin: 1.5rem 0;
+      color: #603c2b;
+      letter-spacing: 2px;
+    }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto 2rem auto;
+      padding: 0 1rem;
+    }
+    .coffee-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(96, 60, 43, 0.07);
+      transition: box-shadow 0.2s;
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      min-height: 150px;
+    }
+    .coffee-card:hover {
+      box-shadow: 0 4px 16px rgba(96, 60, 43, 0.13);
+    }
+    .coffee-name {
+      font-size: 1.2rem;
+      color: #603c2b;
+      font-weight: bold;
+      margin-bottom: 0.3rem;
+    }
+    .coffee-price {
+      color: #9c6e41;
+      font-size: 1.05rem;
+      font-weight: bold;
+      margin-bottom: 0.7rem;
+    }
+    .coffee-desc {
+      color: #4c2a16;
+      font-size: 0.97rem;
+      text-align: left;
+    }
+    /* Responsive */
+    @media (max-width: 900px) {
+      .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Nine Popular Coffees & Costs (India)</h1>
+  <div class="menu-grid">
+    <div class="coffee-card">
+      <div class="coffee-name">Espresso</div>
+      <div class="coffee-price">₹110</div>
+      <div class="coffee-desc">A concentrated shot of robust coffee, classic base for most drinks.</div>
+    </div>
+    <div class="coffee-card">
+      <div class="coffee-name">Latte</div>
+      <div class="coffee-price">₹130</div>
+      <div class="coffee-desc">Smooth espresso with plenty of steamed milk and a touch of foam.</div>
+    </div>
+    <div class="coffee-card">
+      <div class="coffee-name">Cappuccino</div>
+      <div class="coffee-price">₹120</div>
+      <div class="coffee-desc">Espresso, steamed milk, and thick foam—creamy and balanced.</div>
+    </div>
+    <div class="coffee-card">
+      <div class="coffee-name">Americano</div>
+      <div class="coffee-price">₹100</div>
+      <div class="coffee-desc">Espresso with hot water, mellow but full-flavored.</div>
+    </div>
+    <div class="coffee-card">
+      <div class="coffee-name">Mocha</div>
+      <div class="coffee-price">₹140</div>
+      <div class="coffee-desc">Rich blend of espresso, chocolate syrup, and steamed milk.</div>
+    </div>
+    <div class="coffee-card">
+      <div class="coffee-name">Flat White</div>
+      <div class="coffee-price">₹135</div>
+      <div class="coffee-desc">Espresso topped with fine-foamed milk for a smooth texture.</div>
+    </div>
+    <div class="coffee-card">
+      <div class="coffee-name">Macchiato</div>
+      <div class="coffee-price">₹115</div>
+      <div class="coffee-desc">Espresso marked with a dash of milk or microfoam.</div>
+    </div>
+    <div class="coffee-card">
+      <div class="coffee-name">Black Coffee</div>
+      <div class="coffee-price">₹80</div>
+      <div class="coffee-desc">Freshly brewed coffee, served plain without milk or sugar.</div>
+    </div>
+    <div class="coffee-card">
+      <div class="coffee-name">Turkish Coffee</div>
+      <div class="coffee-price">₹150</div>
+      <div class="coffee-desc">Rich, thick coffee made by simmering finely ground beans, unfiltered.</div>
+    </div>
+  </div>
+</body>
+</html>
