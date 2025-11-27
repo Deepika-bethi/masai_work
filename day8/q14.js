@@ -1,8 +1,11 @@
-let loading = setInterval(() => {
-  console.log("Loading...");
-}, 1000);
+console.log("Begin");
 
 setTimeout(() => {
-  clearInterval(loading);
-  console.log("Loaded successfully!");
-}, 5000);
+  console.log("Timeout Task");
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log("Promise Task");
+});
+
+console.log("End");
