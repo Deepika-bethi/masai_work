@@ -1,9 +1,36 @@
-body { font-family: Arial, sans-serif; padding: 20px; }
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    min-height: 100vh;
+}
 
-.login-container, aside { border: 1px solid gray; padding: 20px; width: 250px; margin: auto; }
+nav {
+    width: 100%;
+    background: #333;
+    color: white;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+}
 
-.container { display: flex; gap: 20px; }
+aside {
+    width: 250px;
+    padding: 10px;
+    background: #f0f0f0;
+}
 
-#display { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+main {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+}
 
-.card { border: 1px solid black; padding: 10px; text-align: center; }
+.fleet-card {
+    width: 200px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 2px 2px 5px #aaa;
+}

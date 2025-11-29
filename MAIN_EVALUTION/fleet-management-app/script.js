@@ -1,105 +1,92 @@
-// Login function
-function login() {
-    let email = document.getElementById("email").value;
-    let pass = document.getElementById("password").value;
+let fleetData = []; // Store all vehicles
 
-    if (email === "admin@gmail.com" && pass === "admin1234") {
-        alert("Login Success");
-        window.location.href = "admin.html";
-    } else {
-        alert("Wrong email or password");
-    }
-}
-
-// Fleet Data
-let data = [];
-
-// Add Fleet
 function addFleet() {
-    let reg = document.getElementById("reg").value;
-    let category = document.getElementById("category").value;
-    let driver = document.getElementById("driver").value;
-    let available = document.getElementById("available").value;
+    const regNo = document.getElementById("regNo").value.trim();
+    const category = document.getElementById("category").value;
+    const driverName = document.getElementById("driverName").value.trim();
+    const isAvailable = document.getElementById("isAvailable").value;
 
-    if (!reg || !driver) {
-        alert("Fields cannot be empty");
-        return;
-    }
+    // Validation
+    if(!regNo || !category || !driverName) {
+        alert("All fields are required!");
+        return;
+    }
 
-    let obj = {
-        reg, category, driver, available
-    };
+    // Add vehicle
+    const vehicle = { regNo, category, driverName, isAvailable };
+    fleetData.push(vehicle);
 
-    data.push(obj);
-    render(data);
+    // Clear form
+    document.getElementById("regNo").value = "";
+    document.getElementById("category").value = "";
+    document.getElementById("driverName").value = "";
+    document.getElementById("isAvailable").value = "Available";
 
-    document.getElementById("reg").value = "";
-    document.getElementById("driver").value = "";
+    renderFleet();
 }
 
-// Render Cards
-function render(arr) {
-    let display = document.getElementById("display");
-    display.innerHTML = "";
+// Render fleet cards
+function renderFleet(filteredData) {
+    const dataToRender = filteredData || fleetData;
+    const container = document.getElementById("fleetCards");
+    container.innerHTML = ""; // Clear old cards
 
-    arr.forEach((el, i) => {
-        let card = document.createElement("div");
-        card.className = "card";
-
-        card.innerHTML = `
-            <img src="https://cdn-icons-png.flaticon.com/512/743/743131.png" width="80" />
-            <h3>${el.reg}</h3>
-            <p>Category: ${el.category}</p>
-            <p>Driver: ${el.driver}</p>
-            <p>Status: <b>${el.available}</b></p>
-            <button onclick="updateDriver(${i})">Update Driver</button>
-            <button onclick="changeStatus(${i})">Change Availability</button>
-            <button onclick="deleteFleet(${i})">Delete</button>
-        `;
-        display.append(card);
-    });
+    dataToRender.forEach((vehicle, index) => {
+        const card = document.createElement("div");
+        card.className = "fleet-card";
+        card.innerHTML = `
+            <p><strong>Reg No:</strong> ${vehicle.regNo}</p>
+            <p><strong>Category:</strong> ${vehicle.category}</p>
+            <p><strong>Driver:</strong> ${vehicle.driverName}</p>
+            <p><strong>Availability:</strong> ${vehicle.isAvailable}</p>
+            <button onclick="updateDriver(${index})">Update Driver</button>
+            <button onclick="toggleAvailability(${index})">Change Availability</button>
+            <button onclick="deleteVehicle(${index})">Delete Vehicle</button>
+        `;
+        container.appendChild(card);
+    });
 }
 
-// Update Driver
-function updateDriver(i) {
-    let newName = prompt("Enter new driver name:");
-    if (!newName || newName.trim() === "") {
-        alert("Driver name cannot be empty");
-        return;
-    }
-    data[i].driver = newName;
-    render(data);
+// Card Actions
+function updateDriver(index) {
+    const newDriver = prompt("Enter new driver name").trim();
+    if(newDriver) {
+        fleetData[index].driverName = newDriver;
+        renderFleet();
+    } else {
+        alert("Driver name cannot be empty.");
+    }
 }
 
-// Change Availability
-function changeStatus(i) {
-    data[i].available = data[i].available === "Available" ? "Unavailable" : "Available";
-    render(data);
+function toggleAvailability(index) {
+    fleetData[index].isAvailable = fleetData[index].isAvailable === "Available" ? "Unavailable" : "Available";
+    renderFleet();
 }
 
-// Delete Fleet
-function deleteFleet(i) {
-    if (confirm("Are you sure you want to delete?")) {
-        data.splice(i, 1);
-        render(data);
-    }
+function deleteVehicle(index) {
+    if(confirm("Are you sure you want to delete this vehicle?")) {
+        fleetData.splice(index, 1);
+        renderFleet();
+    }
 }
 
-// Filtering
-function applyFilters() {
-    let cat = document.getElementById("categoryFilter").value;
-    let avail = document.getElementById("availabilityFilter").value;
+// Filters
+document.getElementById("categoryFilter").addEventListener("change", applyFilter);
+document.getElementById("availabilityFilter").addEventListener("change", applyFilter);
+document.getElementById("clearFilter").addEventListener("click", () => {
+    document.getElementById("categoryFilter").value = "All";
+    document.getElementById("availabilityFilter").value = "All";
+    renderFleet();
+});
 
-    let filtered = data.filter(el =>
-        (cat === "All" || el.category === cat) &&
-        (avail === "All" || el.available === avail)
-    );
+function applyFilter() {
+    const category = document.getElementById("categoryFilter").value;
+    const availability = document.getElementById("availabilityFilter").value;
 
-    render(filtered);
-}
+    const filtered = fleetData.filter(vehicle => {
+        return (category === "All" || vehicle.category === category) &&
+               (availability === "All" || vehicle.isAvailable === availability);
+    });
 
-function clearFilters() {
-    document.getElementById("categoryFilter").value = "All";
-    document.getElementById("availabilityFilter").value = "All";
-    render(data);
+    renderFleet(filtered);
 }
