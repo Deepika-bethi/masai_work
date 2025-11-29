@@ -3,54 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Admin Dashboard | Fleet Management</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <!-- Navbar -->
-    <nav>
-        <select id="categoryFilter">
-            <option value="All">All</option>
-            <option value="Auto">Auto</option>
-            <option value="Car">Car</option>
-            <option value="Truck">Truck</option>
-            <option value="Bus">Bus</option>
-        </select>
+    <nav class="navbar">
+        <div class="logo">Fleet Management</div>
+        <div class="filters">
+            <select id="categoryFilter">
+                <option value="All">All Categories</option>
+                <option value="Auto">Auto</option>
+                <option value="Car">Car</option>
+                <option value="Truck">Truck</option>
+                <option value="Bus">Bus</option>
+            </select>
 
-        <select id="availabilityFilter">
-            <option value="All">All</option>
-            <option value="Available">Available</option>
-            <option value="Unavailable">Unavailable</option>
-        </select>
+            <select id="availabilityFilter">
+                <option value="All">All</option>
+                <option value="Available">Available</option>
+                <option value="Unavailable">Unavailable</option>
+            </select>
 
-        <button id="clearFilter">Clear Filter</button>
+            <button id="clearFilter">Clear Filter</button>
+        </div>
     </nav>
 
-    <!-- Sidebar Form -->
-    <aside>
-        <h3>Add Vehicle</h3>
-        <input type="text" id="regNo" placeholder="Reg No of Vehicle">
-        <select id="category">
-            <option value="">Select Category</option>
-            <option value="Auto">Auto</option>
-            <option value="Car">Car</option>
-            <option value="Truck">Truck</option>
-            <option value="Bus">Bus</option>
-        </select>
-        <input type="text" id="driverName" placeholder="Driver Name">
-        <select id="isAvailable">
-            <option value="Available">Available</option>
-            <option value="Unavailable">Unavailable</option>
-        </select>
-        <button onclick="addFleet()">Add Fleet</button>
-    </aside>
+    <div class="container">
+        <!-- Sidebar Form -->
+        <aside class="sidebar">
+            <h3>Add Fleet</h3>
+            <input type="text" id="regNo" placeholder="Reg No">
+            <select id="category">
+                <option value="">Select Category</option>
+                <option value="Auto">Auto</option>
+                <option value="Car">Car</option>
+                <option value="Truck">Truck</option>
+                <option value="Bus">Bus</option>
+            </select>
+            <input type="text" id="driverName" placeholder="Driver Name">
+            <select id="availability">
+                <option value="Available">Available</option>
+                <option value="Unavailable">Unavailable</option>
+            </select>
+            <button id="addFleet">Add Fleet</button>
+        </aside>
 
-    <!-- Main Content -->
-    <main id="fleetCards">
-        <!-- Vehicle cards will appear here dynamically -->
-    </main>
+        <!-- Main Content -->
+        <main class="main-content" id="fleetCards">
+            <!-- Fleet cards will appear here -->
+        </main>
+    </div>
 
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
