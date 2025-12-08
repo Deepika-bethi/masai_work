@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Todo App</title>
+  <style>
+    /* Basic styling */
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #status {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #555;
+      font-size: 0.9rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      margin-bottom: 8px;
+      border-radius: 4px;
+      background: #fafafa;
+      border: 1px solid #ddd;
+    }
+
+    .todo-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .todo-title {
+      font-weight: 600;
+    }
+
+    .todo-completed {
+      font-size: 0.8rem;
+      color: #666;
+    }
+
+    .completed-true .todo-title {
+      text-decoration: line-through;
+      color: green;
+    }
+
+    .completed-false .todo-title {
+      color: #333;
+    }
+
+    .actions button {
+      margin-left: 5px;
+      padding: 5px 8px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    .btn-delete {
+      background: #ff4d4f;
+      color: #fff;
+    }
+
+    .btn-toggle {
+      background: #1890ff;
+      color: #fff;
+    }
+
+    .empty-message {
+      text-align: center;
+      color: #888;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Todo App</h1>
+    <div id="status">Loading todos...</div>
+    <ul id="todo-list"></ul>
+    <div id="empty-message" class="empty-message" style="display: none;">
+      No Todos Available
+    </div>
+  </div>
+
+  <script>
+    const TODOS_KEY = 'todos';
+
+    // Fetch first 20 todos from API and save to localStorage
+    async function fetchAndStoreTodos() {
+      try {
+        const res = await fetch('https://jsonplaceholder.typicode.com/todos');
+        const data = await res.json();                             // [web:2]
+        const firstTwenty = data.slice(0, 20);
+        saveTodos(firstTwenty);
+        setStatus('Todos loaded from API and stored locally.');
+      } catch (error) {
+        console.error('Error fetching todos:', error);
+        setStatus('Failed to load from API. Using existing local data if any.');
+      }
+    }
+
+    // Save array of todos to localStorage
+    function saveTodos(todos) {
+      localStorage.setItem(TODOS_KEY, JSON.stringify(todos));      // [web:7][web:16][web:19]
+    }
+
+    // Get todos array from localStorage
+    function getTodos() {
+      const stored = localStorage.getItem(TODOS_KEY);              // [web:13][web:10]
+      return stored ? JSON.parse(stored) : [];
+    }
+
+    // Set status text
+    function setStatus(message) {
+      const statusEl = document.getElementById('status');
+      statusEl.textContent = message;
+    }
+
+    // Render todos to UI
+    function renderTodos() {
+      const todos = getTodos();
+      const list = document.getElementById('todo-list');
+      const emptyMessageEl = document.getElementById('empty-message');
+
+      list.innerHTML = '';
+
+      if (todos.length === 0) {
+        emptyMessageEl.style.display = 'block';
+        setStatus('No todos in local storage.');
+        return;
+      } else {
+        emptyMessageEl.style.display = 'none';
+      }
+
+      todos.forEach(todo => {
+        const li = document.createElement('li');
+        li.dataset.id = todo.id;
+        li.classList.add(`completed-${todo.completed}`);
+
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'todo-info';
+
+        const titleSpan = document.createElement('span');
+        titleSpan.className = 'todo-title';
+        titleSpan.textContent = todo.title;
+
+        const statusSpan = document.createElement('span');
+        statusSpan.className = 'todo-completed';
+        statusSpan.textContent = 'Completed: ' + (todo.completed ? 'Yes' : 'No');
+
+        infoDiv.appendChild(titleSpan);
+        infoDiv.appendChild(statusSpan);
+
+        const actionsDiv = document.createElement('div');
+        actionsDiv.className = 'actions';
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.className = 'btn-delete';
+        deleteBtn.addEventListener('click', () => handleDelete(todo.id));   // [web:8][web:11][web:17]
+
+        const toggleBtn = document.createElement('button');
+        toggleBtn.textContent = todo.completed ? 'Mark Incomplete' : 'Mark Complete';
+        toggleBtn.className = 'btn-toggle';
+        toggleBtn.addEventListener('click', () => handleToggle(todo.id));
+
+        actionsDiv.appendChild(toggleBtn);
+        actionsDiv.appendChild(deleteBtn);
+
+        li.appendChild(infoDiv);
+        li.appendChild(actionsDiv);
+        list.appendChild(li);
+      });
+
+      setStatus(`Showing ${todos.length} todos from local storage.`);
+    }
+
+    // Delete a todo by id
+    function handleDelete(id) {
+      const todos = getTodos();
+      const filtered = todos.filter(todo => todo.id !== id);
+      saveTodos(filtered);
+      renderTodos();
+    }
+
+    // Toggle completed status by id
+    function handleToggle(id) {
+      const todos = getTodos();
+      const updated = todos.map(todo =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      );
+      saveTodos(updated);
+      renderTodos();
+    }
+
+    // Initialize app: if no todos in localStorage, fetch; then render
+    async function init() {
+      const existing = getTodos();
+      if (existing.length === 0) {
+        setStatus('Fetching todos from API...');
+        await fetchAndStoreTodos();
+      } else {
+        setStatus('Loaded todos from local storage.');
+      }
+      renderTodos();
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
