@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Time Tracker | Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>Daily Activity Logger</h2>
+
+    <input type="date" id="datePicker">
+
+    <input id="activityName" placeholder="Activity Name">
+    <input id="category" placeholder="Category (optional)">
+    <input id="duration" type="number" placeholder="Duration (minutes)">
+    <button id="addBtn">Add Activity</button>
+
+    <p id="remaining">Remaining Minutes: 1440</p>
+
+    <ul id="list"></ul>
+
+    <button id="analyseBtn" disabled>Analyse</button>
+</div>
+
+<script type="module" src="firebase.js"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
