@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login | Time Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Login</h2>
+        <input id="email" type="email" placeholder="Email">
+        <input id="password" type="password" placeholder="Password">
+        <button id="loginBtn">Login</button>
+    </div>
+
+    <script type="module" src="firebase.js"></script>
+    <script type="module">
+        import { auth, signInWithEmailAndPassword } from "./firebase.js";
+
+        document.getElementById("loginBtn").onclick = () => {
+            let email = document.getElementById("email").value;
+            let pass = document.getElementById("password").value;
+
+            signInWithEmailAndPassword(auth, email, pass)
+                .then(() => window.location.href = "index.html")
+                .catch(err => alert(err.message));
+        };
+    </script>
+</body>
+</html>
